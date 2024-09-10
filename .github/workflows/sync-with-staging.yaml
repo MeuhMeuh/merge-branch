@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Merge into staging
-        uses: MeuhMeuh/merge-branch@v1.0.0-alpha
+        uses: MeuhMeuh/merge-branch@master
         with:
           type: now
           target_branch: staging
