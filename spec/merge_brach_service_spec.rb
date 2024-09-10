@@ -3,11 +3,11 @@ require_relative '../lib/services/merge_branch_service'
 describe MergeBrachService do
   context "with invalid type" do
     let(:inputs) {
-      { type: 'invalid_type', event: {}, target_branch: 'develop' }
+      { type: 'invalid_type', target_branch: 'develop', label_name: nil }
     }
 
     it ".validate_inputs!" do
-      expect{ MergeBrachService.validate_inputs!(inputs) }.to raise_error()
+      expect{ MergeBrachService.validate_inputs!(target_branch: inputs[:target_branch], type: inputs[:type], label_name: inputs[:label_name]) }.to raise_error("Error: Invalid type")
     end
   end
 
@@ -21,7 +21,7 @@ describe MergeBrachService do
 
     context "with valid inputs" do
       it ".validate_inputs!" do
-        expect{ MergeBrachService.validate_inputs!(inputs) }.to_not raise_error()
+        expect{ MergeBrachService.validate_inputs!(target_branch: target_branch, type: 'labeled', label_name: label_name) }.to_not raise_error
       end
     end
 
@@ -29,7 +29,7 @@ describe MergeBrachService do
       let(:label_name) { nil }
 
       it ".validate_inputs!" do
-        expect{ MergeBrachService.validate_inputs!(inputs) }.to raise_error()
+        expect{ MergeBrachService.validate_inputs!(target_branch: target_branch, type: 'labeled', label_name: label_name) }.to raise_error("Error: Empty target label name")
       end
     end
 
