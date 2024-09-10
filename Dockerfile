@@ -13,5 +13,4 @@ COPY lib /action/lib
 
 RUN apk del .build-deps
 
-# Commande de démarrage
 CMD ["ruby", "/action/lib/index.rb"]
