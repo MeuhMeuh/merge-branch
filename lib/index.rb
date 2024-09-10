@@ -22,7 +22,7 @@ inputs = {
   target_branch: ENV['INPUT_TARGET_BRANCH']
 }
 
-MergeBrachService.validate_inputs!(inputs)
+MergeBrachService.validate_inputs!(**inputs)
 service = MergeBrachService.new(inputs, @event)
 
 if service.valid?
