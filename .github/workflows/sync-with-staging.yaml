@@ -1,0 +1,27 @@
+name: Sync PR with staging
+
+on:
+  pull_request:
+    types:
+      - labeled
+      - reopened
+      - synchronize
+
+jobs:
+  sync-with-staging:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: |
+      (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'in-staging')) ||
+      (github.event.action == 'labeled' && github.event.label.name == 'in-staging')
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Merge into staging
+        uses: MeuhMeuh/merge-branch@v1.0.0-alpha
+        with:
+          type: now
+          target_branch: staging
+          github_token: ${{ github.token }}
