@@ -8,7 +8,7 @@ class MergeBrachService
     raise "Error: Invalid type" unless [TYPE_LABELED, TYPE_NOW].include?(type)
     raise "Error: Empty target branch"unless target_branch
     if type == TYPE_LABELED
-      raise " Error: Empty target label name" unless label_name
+      raise "Error: Empty target label name" unless label_name
     end
   end
 
