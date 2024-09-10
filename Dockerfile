@@ -1,8 +1,17 @@
-FROM ruby:2.6.3-alpine
+FROM ruby:3.1.2-alpine
+
+RUN apk add --no-cache --virtual .build-deps build-base \
+  && apk add --no-cache bash
 
 WORKDIR /action
+
 COPY Gemfile Gemfile.lock /action/
-RUN bundle install
+
+RUN bundle install --jobs=4 --retry=3
+
 COPY lib /action/lib
 
+RUN apk del .build-deps
+
+# Commande de démarrage
 CMD ["ruby", "/action/lib/index.rb"]
